@@ -1,0 +1,92 @@
+﻿@page
+@model Fastfood.Pages.Thanhtoans.IndexModel
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Lập hóa đơn</h1>
+ 
+
+
+
+@if (Model.cart == null)
+{
+
+    //ko hien thi bang gio hang
+}
+else
+{
+    <div id="maincontent">
+        <div class="container">
+            <div>
+                <h2 class="text-center">Chi tiết hóa đơn</h2>
+
+
+                <div class="container">
+                    <table id="cart" class="table">
+                        <thead>
+                            <tr>
+                                <th>Tên sản phẩm</th>
+                                <th>Giá</th>
+                                <th>Số lượng</th>
+                                <th>Thành tiền</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var item in Model.cart)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Product.Ten)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Product.GiaBan)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Quantity)
+                                    </td>
+
+                                    <td>@(item.Product.GiaBan * item.Quantity)vnd</td>
+
+                                </tr>
+
+                            }
+
+
+
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <a asp-page="/Monans/index" class="btn btn-warning"><i class="fa fa-angle-left"></i> Tiếp tục mua hàng</a>
+                                </td>
+                                <td colspan="2" class="hidden-xs"> </td>
+                                <td style="margin-right: 150px">
+                                    <strong>Tổng tiền : @Model.Total</strong>
+                                </td>
+
+
+                            </tr>
+                        </tfoot>
+                    </table>
+                    <form method="post">
+                        <p>
+                            Tên nhân viên:
+
+                            <select asp-for="Ten" asp-items="Model.NhanvienIndexVm.TenNhanviens">
+                                <option>Chọn</option>
+                            </select>
+                            <input asp-page="/Thanhtoans/Index" type="submit" value="Thanh toán" class="btn btn-primary" />
+                        </p>
+                    </form>
+
+                    <p style="color:red">@Model.message</p>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+

@@ -1,0 +1,96 @@
+﻿@page
+@model Fastfood.Pages.Monans.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<form>
+    <p>
+        Loại:
+        <select asp-for="Loai" asp-items="Model.MonanIndexVm.Loai">
+            <option value="">Tất cả</option>
+        </select>
+        Tên:
+        <input type="text" name="searchString" asp-for="SearchString" />
+        <input type="submit" value="Tìm" />
+    </p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.MonanIndexVm.Monans[0].Ten)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonanIndexVm.Monans[0].Loai)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonanIndexVm.Monans[0].GiaMua)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonanIndexVm.Monans[0].GiaBan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonanIndexVm.Monans[0].Soluong)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.MonanIndexVm.Monans[0].Nhacc)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.MonanIndexVm.Monans)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ten)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Loai)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GiaMua)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.GiaBan)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Soluong)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nhacc)
+                </td>
+                <td>
+
+
+
+                    <a asp-page="./Edit" asp-route-id="@item.MonanId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.MonanId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.MonanId">Delete</a>
+                    <a asp-page="/Thanhtoans/Index" asp-page-handler="buynow"
+                       asp-route-id=@item.MonanId>Thêm vào thanh toán</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var preDisabled = !Model.MonanIndexVm.Monans.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.MonanIndexVm.Monans.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a asp-page="Index"
+       asp-route-pageIndex="@(Model.MonanIndexVm.Monans.PageIndex -1)"
+       class="btn btn-default @preDisabled">Previous</a>
+
+    <a asp-page="Index"
+       asp-route-pageIndex="@(Model.MonanIndexVm.Monans.PageIndex +1)"
+       class="btn btn-default @nextDisabled">Next</a>
+</div>

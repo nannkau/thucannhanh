@@ -1,0 +1,66 @@
+﻿@page
+@model Fastfood.Pages.Hoadons.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Thanhtoans/Index">Create New</a>
+
+</p>
+<form>
+<p>
+
+    Tên nhân viên:
+    <input type="text" name="searchString" asp-for="SearchString" />
+    <input type="submit" value="Tìm kiếm" />
+</p>
+</form>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.HoadonIndexVm.Hoadons[0].Ngaylap)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.HoadonIndexVm.Hoadons[0].NhanvienId)
+            </th>
+
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.HoadonIndexVm.Hoadons)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Ngaylap)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.NhanvienId)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.HoadonId">Edit</a> |
+                    <a asp-page="./Details" asp-route-id="@item.HoadonId">Details</a> |
+                    <a asp-page="./Delete" asp-route-id="@item.HoadonId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+@{
+    var preDisabled = !Model.HoadonIndexVm.Hoadons.HasPrevious ? "disabled" : "";
+    var nextDisabled = !Model.HoadonIndexVm.Hoadons.HasNext ? "disabled" : "";
+}
+<div class="container">
+    <a asp-page="Index"
+       asp-route-pageIndex="@(Model.HoadonIndexVm.Hoadons.PageIndex - 1)"
+       class="btn btn-default @preDisabled">Previous</a>
+
+    <a asp-page="Index"
+       asp-route-pageIndex="@(Model.HoadonIndexVm.Hoadons.PageIndex + 1)"
+       class="btn btn-default @nextDisabled">Next</a>
+</div>
